@@ -1,0 +1,43 @@
+In this chapter, we will begin developing the sample application that will serve as our example throughout the rest of this tutorial. Although the sample app will eventually have users, microposts, and a full login and authentication framework, we will begin with a seemingly limited topic: the creation of static pages. Despite its apparent simplicity, making static pages is a highly instructive exercise, rich in implications—a perfect start for our nascent application.
+
+Although Rails is designed for making database-backed dynamic websites, it also excels at making the kind of static pages we might make with raw HTML files. In fact, using Rails even for static pages yields a distinct advantage: we can easily add just a small amount of dynamic content. In this chapter we’ll learn how. Along the way, we’ll get our first taste of automated testing, which will help us be more confident that our code is correct. Moreover, having a good test suite will allow us to refactor our code with confidence, changing its form without changing its function.
+
+There’s a lot of code in this chapter, especially in Section 3.2 and Section 3.3, and if you’re new to Ruby you shouldn’t worry about understanding the details right now. As noted in Section 1.1.1, one strategy is to copy-and-paste the tests and use them to verify the application code, without worrying at this point how they work. In addition, Chapter 4 covers Ruby in more depth, so there is plenty of opportunity for these ideas to sink in. Finally, RSpec tests will recur throughout the tutorial, so if you get stuck now I recommend forging ahead; you’ll be amazed how, after just a few more chapters, initially inscrutable code will suddenly look simple.
+
+As in Chapter 2, before getting started we need to create a new Rails project, this time called sample_app:
+
+$ cd ~/rails_projects
+$ rails new sample_app --skip-test-unit
+$ cd sample_app
+
+Here the --skip-test-unit option to the rails command tells Rails not to generate a test directory associated with the default Test::Unit framework. This is not because we won’t be writing tests; on the contrary, starting in Section 3.2 we will be using an alternate testing framework called RSpec to write a thorough test suite.
+
+As in Section 2.1, our next step is to use a text editor to update the Gemfile with the gems needed by our application. On the other hand, for the sample application we’ll also need two gems we didn’t need before: the gem for RSpec and the gem for the RSpec library specific to Rails. The code to include them is shown in Listing 3.1. (Note: If you would like to install all the gems needed for the sample application, you should use the code in Listing 9.49 at this time.)
+Listing 3.1. A Gemfile for the sample app.
+
+source 'https://rubygems.org'
+
+gem 'rails', '3.2.13'
+
+group :development, :test do
+  gem 'sqlite3', '1.3.5'
+  gem 'rspec-rails', '2.11.0'
+end
+
+# Gems used only for assets and not required
+# in production environments by default.
+group :assets do
+  gem 'sass-rails',   '3.2.5'
+  gem 'coffee-rails', '3.2.2'
+  gem 'uglifier', '1.2.3'
+end
+
+gem 'jquery-rails', '2.0.2'
+
+group :test do
+  gem 'capybara', '1.1.2'
+end
+
+group :production do
+  gem 'pg', '0.12.2'
+end
